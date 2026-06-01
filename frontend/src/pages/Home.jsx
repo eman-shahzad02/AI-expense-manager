@@ -6,7 +6,7 @@ import { TypeAnimation } from "react-type-animation";
 
 import NavBar from "../components/NavBar";
 
-import dashboard from "../assets/dashboard.webp";
+import dashboard from "../assets/image.png";
 import { StartNow, ThreeDots } from "../utils/Icons";
 
 const Home = () => {

@@ -1,4 +1,5 @@
 import Expense from "../models/expenseModel.js";
+import User from "../models/userModel.js";
 import asyncHandler from "../middlewares/asyncHandler.js";
 
 import {
@@ -25,9 +26,28 @@ export const addExpense = asyncHandler(async (req, res) => {
 
   await newExpense.save();
 
-  return res
-    .status(201)
-    .json({ message: "Expense added successfully", expense: newExpense });
+  const expenses = await Expense.find({
+    user: req.user._id,
+  });
+
+  const totalExpense = expenses.reduce(
+    (acc, expense) => acc + expense.amount,
+    0
+  );
+
+  const user = await User.findById(req.user._id);
+
+  const budgetExceeded =
+    user.budgetLimit > 0 &&
+    totalExpense > user.budgetLimit;
+
+  return res.status(201).json({
+    message: "Expense added successfully",
+    expense: newExpense,
+    totalExpense,
+    budgetLimit: user.budgetLimit,
+    budgetExceeded,
+  });
 });
 
 // Controller function to update an expense

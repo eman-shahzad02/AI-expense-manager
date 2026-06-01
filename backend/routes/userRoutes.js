@@ -8,6 +8,7 @@ import {
   resetPassword,
   sendOTP,
   verifyOTP,
+  setBudget 
 } from "../controllers/userController.js";
 
 import {
@@ -50,6 +51,8 @@ router.delete("/logout", logoutCurrentUser);
 
 // Route for user password reset
 router.put("/reset-password", authenticateUser, resetPassword);
+
+router.put("/budget", authenticateUser, setBudget);
 
 // Route for sending and verifying otp
 router.post("/send-otp", validate({ email: validateEmailAddress }), sendOTP);

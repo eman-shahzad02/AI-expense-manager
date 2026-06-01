@@ -48,6 +48,7 @@ export const registerUser = asyncHandler(async (req, res) => {
       username: newUser.username,
       email: newUser.email,
       verified: newUser.verified,
+      budgetLimit: newUser.budgetLimit,
     },
   });
 });
@@ -71,6 +72,7 @@ export const loginUser = asyncHandler(async (req, res) => {
         username: existingUser.username,
         email: existingUser.email,
         verified: existingUser.verified,
+        budgetLimit: existingUser.budgetLimit,
       },
       error:
         "Email is not verified. Please verify your email via otp to proceed.",
@@ -90,6 +92,7 @@ export const loginUser = asyncHandler(async (req, res) => {
       username: existingUser.username,
       email: existingUser.email,
       verified: existingUser.verified,
+      budgetLimit: existingUser.budgetLimit,
     },
   });
 });
@@ -108,6 +111,30 @@ export const logoutCurrentUser = asyncHandler(async (req, res) => {
   }
 });
 
+export const setBudget = asyncHandler(async (req, res) => {
+  const { budgetLimit } = req.body;
+
+  if (budgetLimit === undefined || budgetLimit < 0) {
+    return res.status(400).json({
+      error: "Invalid budget amount",
+    });
+  }
+
+  const user = await User.findById(req.user._id);
+  if (!user) {
+    return res.status(404).json({ error: "User not found!" });
+  }
+
+  user.budgetLimit = Number(budgetLimit);
+
+  await user.save();
+
+  return res.status(200).json({
+    message: "Budget updated successfully",
+    budgetLimit: user.budgetLimit,
+  });
+});
+
 // Controller function to get current user profile details.
 export const getCurrentUserProfile = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
@@ -120,6 +147,7 @@ export const getCurrentUserProfile = asyncHandler(async (req, res) => {
         username: user.username,
         email: user.email,
         verified: user.verified,
+        budgetLimit: user.budgetLimit,
       },
     });
   } else {
@@ -181,6 +209,7 @@ export const updateCurrentUserProfile = asyncHandler(async (req, res) => {
       username: updatedUser.username,
       email: updatedUser.email,
       verified: updatedUser.verified,
+      budgetLimit: updatedUser.budgetLimit,
     },
   });
 });
@@ -288,6 +317,8 @@ export const verifyOTP = asyncHandler(async (req, res) => {
       username: updatedUser.username,
       email: updatedUser.email,
       verified: updatedUser.verified,
+      budgetLimit: updatedUser.budgetLimit,
+
     },
     message: "Email has been verified successfully!",
   });

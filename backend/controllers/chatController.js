@@ -2,6 +2,7 @@ import asyncHandler from "../middlewares/asyncHandler.js";
 import { GoogleGenAI } from "@google/genai";
 import Expense from "../models/expenseModel.js";
 import Income from "../models/incomeModel.js";
+import User from "../models/userModel.js";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -17,37 +18,83 @@ export const chatWithAI = asyncHandler(async (req, res) => {
     return res.status(400).json({ error: "Message is required!" });
   }
 
-  // 🔹 Fetch user data
+  // ================= DATA FETCH =================
+  const user = await User.findById(userId);
   const expenses = await Expense.find({ user: userId });
   const incomes = await Income.find({ user: userId });
 
-  // 🔹 Calculate totals
+  // ================= TOTALS =================
   const totalExpense = expenses.reduce((acc, e) => acc + e.amount, 0);
   const totalIncome = incomes.reduce((acc, i) => acc + i.amount, 0);
+  const balance = totalIncome - totalExpense;
 
-  // 🔹 Build smart prompt
+  const budgetLimit = user?.budgetLimit || 0;
+  const remainingBudget = budgetLimit - totalExpense;
+
+  // ================= CATEGORY ANALYSIS =================
+  const categoryMap = {};
+
+  expenses.forEach((e) => {
+    if (!categoryMap[e.category]) {
+      categoryMap[e.category] = 0;
+    }
+    categoryMap[e.category] += e.amount;
+  });
+
+  const categoryBreakdown = Object.entries(categoryMap)
+    .map(([cat, amt]) => {
+      const percent = totalExpense ? ((amt / totalExpense) * 100).toFixed(1) : 0;
+      return `${cat}: ${amt} (${percent}%)`;
+    })
+    .join("\n");
+
+  const topCategory =
+    Object.entries(categoryMap).sort((a, b) => b[1] - a[1])[0]?.[0] || "None";
+
+  const isOverBudget = budgetLimit > 0 && totalExpense > budgetLimit;
+
+  // ================= SMART PROMPT =================
   const prompt = `
-You are a personal finance assistant.
+You are a highly intelligent personal finance advisor.
 
-User question: ${message}
+User question:
+${message}
 
-User financial data:
-- Total Income: ${totalIncome}
-- Total Expense: ${totalExpense}
+================= USER FINANCIAL OVERVIEW =================
+Total Income: ${totalIncome}
+Total Expense: ${totalExpense}
+Balance: ${balance}
 
-Expenses breakdown:
-${expenses.map(e => `- ${e.title}: ${e.amount} (${e.category})`).join("\n")}
+Budget Limit: ${budgetLimit}
+Remaining Budget: ${remainingBudget}
+Budget Status: ${isOverBudget ? "OVER BUDGET" : "WITHIN BUDGET"}
 
-Incomes breakdown:
-${incomes.map(i => `- ${i.title}: ${i.amount} (${i.category})`).join("\n")}
+Top Spending Category: ${topCategory}
 
-Instructions:
-- Answer clearly
-- Be helpful and short
-- Give financial advice if possible
+================= CATEGORY BREAKDOWN =================
+${categoryBreakdown || "No expenses yet"}
+
+================= EXPENSE LIST =================
+${expenses
+  .map((e) => `- ${e.title}: ${e.amount} (${e.category})`)
+  .join("\n")}
+
+================= INCOME LIST =================
+${incomes
+  .map((i) => `- ${i.title}: ${i.amount} (${i.category})`)
+  .join("\n")}
+
+================= INSTRUCTIONS =================
+- Be concise and practical
+- Always consider budget limit
+- Highlight overspending if present
+- Suggest how to reduce spending in top categories
+- Give actionable advice (not generic talk)
+- If user is within budget, suggest savings improvement
+- If over budget, suggest correction plan
 `;
 
-  // 🔹 AI response
+  // ================= AI RESPONSE =================
   const response = await ai.models.generateContent({
     model: "gemini-3-flash-preview",
     contents: prompt,
@@ -58,7 +105,11 @@ Instructions:
     summary: {
       totalIncome,
       totalExpense,
-      balance: totalIncome - totalExpense,
+      balance,
+      budgetLimit,
+      remainingBudget,
+      isOverBudget,
+      topCategory,
     },
   });
 });
