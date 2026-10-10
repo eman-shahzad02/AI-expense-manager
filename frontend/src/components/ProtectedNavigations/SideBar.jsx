@@ -24,80 +24,120 @@ const SideBar = () => {
   const isRouteActive = (path) => location.pathname === path;
 
   const menuItems = [
-    { name: "Dashboard", path: "/dashboard", icon: <FaTachometerAlt /> },
-    { name: "Incomes", path: "/dashboard/incomes", icon: <FaMoneyBillWave /> },
-    { name: "Expenses", path: "/dashboard/expenses", icon: <FaWallet /> },
-    { name: "Chatbot", path: "/dashboard/chatbot", icon: <FaRobot /> },
+    {
+      name: "Dashboard",
+      path: "/dashboard",
+      icon: <FaTachometerAlt />,
+    },
+    {
+      name: "Incomes",
+      path: "/dashboard/incomes",
+      icon: <FaMoneyBillWave />,
+    },
+    {
+      name: "Expenses",
+      path: "/dashboard/expenses",
+      icon: <FaWallet />,
+    },
+    {
+      name: "Chatbot",
+      path: "/dashboard/chatbot",
+      icon: <FaRobot />,
+    },
   ];
 
   return (
     <nav
-      className={`hidden xl:flex flex-col h-full border-r-1 border-secondary py-3 transition-all duration-300
-      ${collapsed ? "w-[70px]" : "w-[15%]"}`}
+      className={`hidden xl:flex flex-col h-full border-r border-secondary py-4 bg-white transition-all duration-300
+      ${collapsed ? "w-[80px]" : "w-[260px]"}`}
     >
-      {/* 🔝 Top */}
-      <div className="px-4 flex items-center justify-between">
+      {/* 🔝 Top Section */}
+      <div className="flex items-center px-4 mb-10">
         {!collapsed && (
-          <div className="flex items-center gap-x-2">
-            <img src={logo} alt="logo" className="w-[2.5rem]" />
-            <h5 className="text-xl font-outfit">
-              Spend<span className="text-primary">Smart.</span>
+          <div className="flex items-center gap-3 overflow-hidden">
+            <img
+              src={logo}
+              alt="logo"
+              className="w-10 h-10 object-contain"
+            />
+
+            <h5 className="text-[20px] font-semibold whitespace-nowrap">
+              Expense
+              <span className="text-primary">Manager.</span>
             </h5>
           </div>
         )}
 
-        <FaBars
-          className="cursor-pointer"
+        <button
+          className={`text-xl cursor-pointer hover:text-primary transition-all duration-200
+          ${collapsed ? "mx-auto" : "ml-auto"}`}
           onClick={() => setCollapsed(!collapsed)}
-        />
+        >
+          <FaBars />
+        </button>
       </div>
 
       {/* 🔗 Menu */}
-      <menu className="w-full h-full flex flex-col px-3 mt-12">
-        <div className="space-y-6 flex flex-col">
+      <div className="flex flex-col h-full px-3">
+        <div className="flex flex-col gap-3">
           {menuItems.map((item, i) => (
-            <li
+            <button
               key={i}
-              className={`link relative ${
-                isRouteActive(item.path) ? "activeLink" : ""
-              }`}
               onClick={() => navigate(item.path)}
+              className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200
+              ${
+                isRouteActive(item.path)
+                  ? "bg-primary text-white"
+                  : "hover:bg-gray-100 text-gray-700"
+              }`}
             >
-              <span className="text-[18px] min-w-[20px]">
+              <span className="text-lg min-w-[20px] flex justify-center">
                 {item.icon}
               </span>
 
-              {!collapsed && item.name}
-
-              {/* Tooltip */}
-              {collapsed && (
-                <span className="absolute left-14 text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100">
+              {!collapsed && (
+                <span className="text-sm font-medium">
                   {item.name}
                 </span>
               )}
-            </li>
+            </button>
           ))}
         </div>
 
-        {/* ⚙️ Bottom */}
-        <li
-          className={`link mt-auto ${
-            isRouteActive("/dashboard/settings") ? "activeLink" : ""
-          }`}
-          onClick={() => navigate("/dashboard/settings")}
-        >
-          <FaCog className="text-[18px] min-w-[20px]" />
-          {!collapsed && "Settings"}
-        </li>
+        {/* ⚙️ Bottom Buttons */}
+        <div className="mt-auto flex flex-col gap-3">
+          <button
+            onClick={() => navigate("/dashboard/settings")}
+            className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200
+            ${
+              isRouteActive("/dashboard/settings")
+                ? "bg-primary text-white"
+                : "hover:bg-gray-100 text-gray-700"
+            }`}
+          >
+            <FaCog className="text-lg min-w-[20px]" />
 
-        <li
-          className="link mt-6 hover:bg-error hover:text-white"
-          onClick={() => dispatch(openModal())}
-        >
-          <FaSignOutAlt className="text-[18px] min-w-[20px]" />
-          {!collapsed && "Logout"}
-        </li>
-      </menu>
+            {!collapsed && (
+              <span className="text-sm font-medium">
+                Settings
+              </span>
+            )}
+          </button>
+
+          <button
+            onClick={() => dispatch(openModal())}
+            className="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-700 hover:bg-red-500 hover:text-white transition-all duration-200"
+          >
+            <FaSignOutAlt className="text-lg min-w-[20px]" />
+
+            {!collapsed && (
+              <span className="text-sm font-medium">
+                Logout
+              </span>
+            )}
+          </button>
+        </div>
+      </div>
     </nav>
   );
 };
