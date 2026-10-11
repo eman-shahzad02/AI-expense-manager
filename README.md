@@ -43,7 +43,26 @@ Spend Smart helps users organize their personal finances through an interactive 
 
 ## AI Integration
 
-The project includes an AI-powered chatbot intended to help users with financial queries and support informed personal finance decisions. The specific AI model or service can be documented once its implementation is verified.
+## AI-Powered Financial Assistant
+
+Spend Smart integrates Google's Gemini AI to provide personalized financial guidance based on a user's recorded financial data.
+
+### How It Works
+
+* Retrieves the authenticated user's income and expense records.
+* Calculates total income, total expenses, balance, and remaining budget.
+* Analyzes spending by category and identifies the highest-spending category.
+* Provides the AI model with a financial summary and the user's question.
+* Generates practical suggestions related to budgeting, spending habits, and savings.
+
+### Technical Implementation
+
+* Google Gen AI SDK (`@google/genai`)
+* Gemini model configured in the backend
+* Node.js and Express.js
+* MongoDB and Mongoose for financial data retrieval
+
+The AI assistant is designed to provide contextual financial guidance using the user's recorded transactions and budget information.
 
 ## Project Learning Outcomes
 
