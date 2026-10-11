@@ -79,11 +79,12 @@ The AI assistant is designed to provide contextual financial guidance using the 
 ## Author
 
 **Eman Shahzad**
+Computer Science | Artificial Intelligence | Data Analytics | Aspiring Data Scientist
 
-Computer Science | Interested in Artificial Intelligence, Data Analytics, and Data Science.
+I am a Computer Science student interested in Artificial Intelligence, data analytics, and data science. Through this project, I explored full-stack web development, financial data visualization, and the integration of a Gemini-powered AI assistant.
 
 * GitHub: [eman-shahzad02](https://github.com/eman-shahzad02)
 
 ## Source Acknowledgement
 
-This project includes work based on an existing codebase that was adapted for the project. Original-source attribution and applicable licensing should be verified and acknowledged appropriately.
+This project was developed by adapting an existing codebase and extending its functionality. The project's original source and applicable license should be acknowledged appropriately. My contribution includes the AI-powered financial assistant integration and related project improvements.
