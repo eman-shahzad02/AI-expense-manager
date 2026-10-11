@@ -1,122 +1,70 @@
-<p align="center">
-  <img src="frontend/public/logo.webp" width="100" />
-</p>
-<h1 align="center">Spend Smart - Effortless Financial Management</h1>
+# Spend Smart — AI-Based Expense Manager
 
-<img src="frontend/src/assets/dashboard.webp" />
+A full-stack personal finance management web application developed as a Final Year Project, combining expense tracking, income management, budgeting, financial analytics, and an AI-powered chatbot.
 
-<h2 align="center">
-  <a href="https://spend-smart-dev.vercel.app">Explore the Project Live!</a>
-</h2>
+## Project Overview
 
-<hr/>
+Spend Smart helps users organize their personal finances through an interactive dashboard and integrated financial management tools.
 
-Spend Smart is your go-to platform for effortless financial management. Track expenses, manage income, and stay on top of your finances with ease. Easily add transactions, and navigate your dashboard with ease. Take control of your finances with Spend Smart.
+## Key Features
 
-<hr/>
+* **User Authentication:** Registration, login, email OTP verification, and password reset.
+* **Expense Management:** Add, edit, delete, categorize, and review expenses.
+* **Income Management:** Track multiple income sources and view income records.
+* **Budget Planning:** Set category-wise spending limits and monitor budget usage.
+* **Financial Analytics:** Explore income, expenses, balance summaries, and financial trends through interactive charts.
+* **Excel Reports:** Export financial records for offline analysis.
+* **AI-Powered Chatbot:** An integrated chatbot designed to answer financial queries and provide financial guidance.
+* **Responsive Interface:** Interactive navigation, notifications, and animated UI elements.
 
-## Table of Contents
+## Technology Stack
 
-- [Features](#features)
-- [Installation](#installation)
-- [Experience](#experience)
-- [License](#license)
-- [For more Content](#for-more-content)
+**Frontend**
 
-<hr>
+* React.js
+* React Router DOM
+* Redux Toolkit
+* Tailwind CSS and NextUI
+* Recharts
+* Framer Motion
 
-## Features
+**Backend**
 
-Here are some key features of **Spend Smart** -
+* Node.js and Express.js
+* MongoDB and Mongoose
+* JWT authentication
+* bcryptjs
+* Nodemailer and OTP Generator
 
-- **Expense Tracking**: Easily categorize and monitor your expenses.
-- **Income Management**: Seamlessly add and track your income sources.
-- **Secure Authentication**: Protect your account with robust authentication.
-- **Insightful Reports**: Gain valuable insights into your financial health.
-- **Personalized Budgeting**: Set and track customized spending limits.
+**Additional Tools**
 
-<hr/>
+* Git and GitHub
+* Environment variables managed through dotenv
 
-## Installation
+## AI Integration
 
-Follow these steps to set up Spend Smart on your local machine:
+The project includes an AI-powered chatbot intended to help users with financial queries and support informed personal finance decisions. The specific AI model or service can be documented once its implementation is verified.
 
-### Prerequisites
+## Project Learning Outcomes
 
-- Node.js and npm installed on your machine
-- MongoDB installed and running locally or accessible via a cloud service
-- Git installed on your machine
+* Working with a full-stack JavaScript application.
+* Understanding REST API and database integration.
+* Exploring authentication and user data management.
+* Presenting financial information through charts and reports.
+* Integrating an AI-assisted feature into a web application.
 
-### Clone the repository:
+## Live Demo
 
-```bash
-git clone https://github.com/SaxenaShourya/spend-smart.git
-```
+[Explore Spend Smart](https://spend-smart-dev.vercel.app/)
 
-### Make the .env file in backend directory
+## Author
 
-Create a `.env` file based of `env.example` in the backend directory and save it as .env.
+**Eman Shahzad**
 
-```bash
-cd backend
-```
+Computer Science | Interested in Artificial Intelligence, Data Analytics, and Data Science.
 
-#### Example .env file
+* GitHub: [eman-shahzad02](https://github.com/eman-shahzad02)
 
-```bash
-# .env.example
-PORT=3000
-MONGO_URI=mongodb://localhost:27017/spend_smart
-JWT_SECRET_KEY=your_secret_key_here
-NODE_ENV=development
-ENCRYPTION_SALT=10
-EMAIL_USER=your_email@example.com
-EMAIL_PASS=your_email_app_password_here
-```
+## Source Acknowledgement
 
-### Setup
-
-To install dependencies and start the development servers for both frontend and backend, run the following commands:
-
-1. Install dependencies for both frontend and backend
-
-```bash
-npm run setup
-```
-
-2. Start the development servers for both frontend and backend
-
-```bash
-npm run dev
-```
-
-<hr/>
-
-## Experience
-
-During the development of Spend Smart, I gained valuable experience in several key areas:
-
-- **Full-Stack Development** 💻: I learned how to develop both frontend and backend components of a web application, enabling me to create a seamless user experience from start to finish.
-- **React.js** ⚛️: I honed my skills in React.js, leveraging its component-based architecture to build dynamic and interactive user interfaces.
-- **Node.js and Express.js** 🚀: I became proficient in using Node.js and Express.js to create a scalable and efficient backend server, handling authentication, data storage, and API endpoints.
-- **MongoDB and Mongoose** 🍃: I learned how to work with MongoDB, a NoSQL database, and Mongoose, an object modeling tool, to store and manage data for Spend Smart.
-- **User Authentication** 🔒: I implemented secure user authentication using JWT (JSON Web Tokens), ensuring that user data remains protected and accessible only to authorized users.
-- **State Management** 🔄: I utilized Redux for state management in the frontend, enabling efficient data flow and ensuring consistency across the application.
-- **Deployment** 🚀: I gained experience in deploying web applications, learning how to deploy both the frontend and backend components to cloud platforms like Vercel, Docker.
-- **Agile Development** 🔄: I practiced Agile development methodologies throughout the project, including iterative development, continuous integration, and frequent testing.
-- **UI/UX Design** 🎨: I focused on creating an intuitive and user-friendly interface for Spend Smart, prioritizing usability and accessibility to enhance the overall user experience.
-
-By working on Spend Smart, I not only enhanced my technical skills but also gained valuable insights into the process of developing a real-world web application from concept to completion.
-
-<hr/>
-
-## License:
-
-- Spend Smart is licensed under the [MIT License](LICENSE).
-
-<hr/>
-
-## For more Content
-
-- For feedback and support, email us at saxenashourya000@gmail.com 📧
-- Follow me on [Linkedin](https://www.linkedin.com/in/saxena-shourya) for updates. 🔗
+This project includes work based on an existing codebase that was adapted for the project. Original-source attribution and applicable licensing should be verified and acknowledged appropriately.
